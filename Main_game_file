@@ -1,0 +1,50 @@
+import sys
+
+import pygame
+
+# Import the settings
+from Settings import Settings
+
+# Import the ship
+from Ship import Ship
+
+# The following is the class for managing the overall game.
+class AlienInvasion:
+    # The following initializes the game and creates the game resources.
+    def __init__(self):
+        pygame.init()
+        self.settings = Settings()
+
+        # Where does this .set_mode come from? Does it come from pygame? I don't think I initialized it anywhere.
+        # Yep, it looks like I haven't initialized it anywhere, so my best guess is that it probably comes from pygame.
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height)
+        )
+
+        self.screen = pygame.display.set_mode((1200, 800))
+        pygame.display.set_caption("Alien Invasion")
+
+        self.ship = Ship(self)
+
+    def run_game(self):
+        # This is the main loop for the game!
+        while True:
+            # In the book it says to 'watch for keyboard and mouse events', I'm not quite sure what that means.
+            # Maybe it tracks the actions that the user takes and retrieves these events with the get method?
+            # I think that may be what it is, that's what it looks like.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+
+            # Redraw the screen during each pass through the loop
+            # This is also where we see the settings background color from the settings class used.
+            self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
+
+            # Make the most recently 'drawn' screen visible.
+            pygame.display.flip()
+
+if __name__ == '__main__':
+    # Make a game instance and then run the game.
+    ai = AlienInvasion()
+    ai.run_game()
