@@ -1,0 +1,10 @@
+Saturday, May 30th, 2020
+
+So far so good. I am enjoying myself. Today I learned a little bit about how to use the pygame API. Many of the oncepts I've 
+gone over I've encountered before. I also learned how to set the game window size, its color, how to import an image in the 
+game and position that image and a little bit about the concepts underlying game design with pycharm. For example, everything 
+in pygame is conceived of as a rectangle, or rect, because rectangles are simple geometric shapes, so they are easy to work 
+with. Also, everything in the game has a "surface", which must be consistently re-loaded/re-drawn, giving the game and the 
+objects in it the illusion of movement. Finally, each time the user interacts with the game it is an "event", and each event
+must be retrieved with the .get() method, which we place within a for loop, within a while loop, to keep things running 
+smoothly. That's all for today.
