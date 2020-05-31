@@ -29,20 +29,43 @@ class AlienInvasion:
     def run_game(self):
         # This is the main loop for the game!
         while True:
-            # In the book it says to 'watch for keyboard and mouse events', I'm not quite sure what that means.
-            # Maybe it tracks the actions that the user takes and retrieves these events with the get method?
-            # I think that may be what it is, that's what it looks like.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self.ship.update()
+            self._update_screen()
 
-            # Redraw the screen during each pass through the loop
-            # This is also where we see the settings background color from the settings class used.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
+    # Here is one of the helper functions to be included in the run_game function. The leading underscore identifies
+    # this as a helper method.
+    def _check_events(self):
+        # In the book it says to 'watch for keyboard and mouse events', I'm not quite sure what that means.
+        # Maybe it tracks the actions that the user takes and retrieves these events with the get method?
+        # I think that may be what it is, that's what it looks like.
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    # Move the ship to the right.
+                    self.ship.moving_right = True
+                elif event.key == pygame.K_LEFT:
+                    # Move the ship to the left.
+                    self.ship.moving_left = True
 
-            # Make the most recently 'drawn' screen visible.
-            pygame.display.flip()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = False
+
+    # Here is another helper function to be included in the run_game function. In Python leading underscores
+    # indicate helper methods apparently.
+    def _update_screen(self):
+        # Redraw the screen during each pass through the loop
+        # This is also where we see the settings background color from the settings class used.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        # Make the most recently 'drawn' screen visible.
+        pygame.display.flip()
 
 if __name__ == '__main__':
     # Make a game instance and then run the game.
