@@ -15,13 +15,17 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
+        # The following methods set the game to full screen. A seperate line of code setting the game to a specified
+        # screen size that is less than full screen has been commented out lower down. I did not delete it
+        # because I wanted to maintain the option of quickly switching between full screen and non-full
+        # screen modes.
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
+
         # Where does this .set_mode come from? Does it come from pygame? I don't think I initialized it anywhere.
         # Yep, it looks like I haven't initialized it anywhere, so my best guess is that it probably comes from pygame.
-        self.screen = pygame.display.set_mode(
-            (self.settings.screen_width, self.settings.screen_height)
-        )
-
-        self.screen = pygame.display.set_mode((1200, 800))
+        # self.screen = pygame.display.set_mode((1200, 800))
         pygame.display.set_caption("Alien Invasion")
 
         self.ship = Ship(self)
@@ -29,20 +33,51 @@ class AlienInvasion:
     def run_game(self):
         # This is the main loop for the game!
         while True:
-            # In the book it says to 'watch for keyboard and mouse events', I'm not quite sure what that means.
-            # Maybe it tracks the actions that the user takes and retrieves these events with the get method?
-            # I think that may be what it is, that's what it looks like.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self.ship.update()
+            self._update_screen()
 
-            # Redraw the screen during each pass through the loop
-            # This is also where we see the settings background color from the settings class used.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
+    # Here is one of the helper functions to be included in the run_game function. The leading underscore identifies
+    # this as a helper method.
+    def _check_events(self):
+        # In the book it says to 'watch for keyboard and mouse events', I'm not quite sure what that means.
+        # Maybe it tracks the actions that the user takes and retrieves these events with the get method?
+        # I think that may be what it is, that's what it looks like.
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
 
-            # Make the most recently 'drawn' screen visible.
-            pygame.display.flip()
+    def _check_keydown_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            # Move the ship to the right.
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            # Move the ship to the left.
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            # Press q to quit the game.
+            sys.exit()
+
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+
+    # Here is another helper function to be included in the run_game function. In Python leading underscores
+    # indicate helper methods apparently.
+    def _update_screen(self):
+        # Redraw the screen during each pass through the loop
+        # This is also where we see the settings background color from the settings class used.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        # Make the most recently 'drawn' screen visible.
+        pygame.display.flip()
 
 if __name__ == '__main__':
     # Make a game instance and then run the game.
