@@ -8,3 +8,38 @@ with. Also, everything in the game has a "surface", which must be consistently r
 objects in it the illusion of movement. Finally, each time the user interacts with the game it is an "event", and each event
 must be retrieved with the .get() method, which we place within a for loop, within a while loop, to keep things running 
 smoothly. That's all for today.
+
+Monday, June 1st, 2020. 02:58
+
+Today was an interesting day of coding. 
+First I briefly skimmed pygame's documentation.
+Then, I limited the ships range of movement, ensuring that it is unable to progress beyond the bounds of the games main frame.
+I did this by adding conditions in the ship classes movement function stipulating that its respective movement flag must be
+true AND the location of the ship must not have exceeded the left and right limits of the frames x-axis. 
+After limiting the ships movement I refactored the check_event() method. I took the blocks of code that were previously all
+limped together as one in the check event method and consolidated them into their own helper methods (a key_down method and
+a key_up method), which were then called by the check_events method each time an event is triggered. The check_events method 
+remained within the game's main while loop, so that all the related code is consistently checked for.
+Next, I created a condition within the _key_down helper event for the check_events method stipulating that if the q key is 
+pressed, the system exits (the game closes). 
+Finally, I refactored the code indicating the game's window size and instead made it full screen. This was accomplished fairly 
+easily because there's a .FULLSCREEN method available in pygame that came in pretty handy.
+
+After all of this, I worked my way through a few exercises that demanded I apply much of my recently gleaned knowledge.
+I created a rocket image that started out positioned in the center of the screen rather than starting centered at the bottom.
+I then code it to be able to move up and down as well as left and right. The movemnt part wasn't particularly tricky, but
+setting the boundaries for the upward and downward movement was a little strange, though I eventually accomplished this by
+ensuring that downward movement of the ship was terminated if the position of the ship became equal the rectangles maximum 
+y-value. 
+A side note: Unless I've misunderstood something, the rectangle's y-value's appear to be inverted, so that when you move
+the ship downward the y-value appears to increase, and as you move the ship upward the y-value appears to decrease.
+The final exercise was to simply create a blank frame and then have pygame print out whatever key you pressed. This was kind
+of interesting because pygame ended up what I assumed to be the ASCII values of the keys I pressed, rather than they keys
+themselves. 
+
+I had a question early on. It occurred to me because I intend to make an RPG soon after completing this tutorial. I wanted to 
+know, how to I give my character image the appearance of movement? The solution I've come up with so far is that I should
+have several character images and either A: change the image in response to each arrow press of the player, or B: For 
+continous movement, cycle through the images for as long as the player holds down the any of the movement keys.
+
+Anyway, it was an interesting an educational day, now to upload the code.
