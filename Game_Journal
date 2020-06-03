@@ -8,3 +8,32 @@ with. Also, everything in the game has a "surface", which must be consistently r
 objects in it the illusion of movement. Finally, each time the user interacts with the game it is an "event", and each event
 must be retrieved with the .get() method, which we place within a for loop, within a while loop, to keep things running 
 smoothly. That's all for today.
+
+Wednesday, June 3rd, 2020. 00:49
+
+I didn't document my progress yesterday, but I did put some time in. It wasn't really quality time though. I worked my way 
+through a bit of the project but my head wasn't in the right place and I didn't really understnad what I was doing very well.
+I encountered a few problems and ultimately decided to take a hiatus. I came back to it today and was able to rectify the 
+issues fairly swiftly. 
+
+Today, I began work on adding aliens to the game. First I created the alien class for a solitary alien to use as a replicator
+for more of its (odious?) kind. This didn't seem very complicated as I worked through it. I created the alien class as a sprite
+group, and created a helper function within the alien invasion class to create an entire fleet of aliens. But before we get 
+there, to create the single alien, in the create fleet function I created an alien variable and set its value equal to Alien, 
+the name of the alien class, with the value self passed as a paramater. Then I used self.aliens.add(alien) to add the newly 
+created alien to my aliens sprite group. The last step was to use self.aliens.draw(self.screen) to draw the newly created alien to 
+the screen surface, or the screen variable initialized in the alien invasion super class, within the update screen function. 
+I've assumed that the reason I didn't have to import any of the other class files to the alien class is because that is what 
+I'm essentially doing in def__init when I call super().__init__().
+
+Now, for creating the fleet of aliens. The first step was to create a singluar instance of the Alien class. Next, I created 
+alien_width = alien.rect.width, this set the value fo the alien_width variable to the alien's rectangluar width value. 
+Next we needed to calculate the total available space for the fleet, so we created a variable called available_space_x
+and set it equal to the width of the screen minus 2 times the value of alien width in order to create two margins on either
+side of the screen whose width's are equal to the width of a single alien image. After calculating the alien_width we 
+calculated the number of aliens by divding (I think?) available_space_x by 2 times alien_width.
+
+Finally, I created a for loop that created an alien for each alien in the range of number_of_aliens_x, set alien.x to 
+alien_width plus two times alien_width times alien_number
+Then we set alien.rect.x to the value of alien.x,
+and last we added each alien to self.aliens.add.
