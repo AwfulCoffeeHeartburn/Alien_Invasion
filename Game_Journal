@@ -37,3 +37,8 @@ Finally, I created a for loop that created an alien for each alien in the range 
 alien_width plus two times alien_width times alien_number
 Then we set alien.rect.x to the value of alien.x,
 and last we added each alien to self.aliens.add.
+
+Next time I should keep the journal and create its update by explaining to myself what I'm doing as I go. I think this method
+would be more effective than my current method of attempting to summarize everything I'm doing when I'm done, because it 
+seems likely to help me become even more engaged with the project, and because summarizing everything after the fact feels
+more tedious than educational.
