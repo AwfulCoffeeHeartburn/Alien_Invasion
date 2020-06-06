@@ -8,3 +8,31 @@ with. Also, everything in the game has a "surface", which must be consistently r
 objects in it the illusion of movement. Finally, each time the user interacts with the game it is an "event", and each event
 must be retrieved with the .get() method, which we place within a for loop, within a while loop, to keep things running 
 smoothly. That's all for today.
+
+Saturday, June 6th, 2020. 04:27
+Today I refactored the _create_fleet() helper method in my alien_invasion game. I took most of the code from the _create_fleet()
+method and put it in a _create_alien() method that I then called from the create fleet method. In the create fleet method I just 
+used a for loop to call the create alien method for each alien that can fit into the predefined number_aliens_x variable.
+Next, I added some to the create fleet method, I made alien_width and alien_height equal to alien.rect.size, made a ship_height
+variable equal to the rectangular height of the ship, and created an available_space variable equal to the screen height minus
+three times an alien's height minus a ships height. Kind of confusing even to write, but ultimately it amounts to calculating
+the avaiable space in which I can populate the alien fleet. After calculating the space, I made a number_rows variable and
+set it equal to the available_space  divided by two multiplied by the alien's height. Once more, this basically just determined
+how many rows to create and how large to make them. 
+I also modified the create alien function to have aliend_width and alien_height variables both set equal to the alien's 
+rectangular size, and I created an alien.rect.y variable set equal to the aliens rectangular height plus two times the alien's
+rectangular height multiplied by the row number. I know, kind of confusing, but this was just to determine the size of each 
+alien.
+Last, I made the fleet move. I have the aliens a speed in the settings file, and created a new variable self.settings in the
+alien.py file, which I set equal to ai_game.settings. I needed to create this new variable self.settings so that I could use
+it to access the aliens attributes in settings from other files.
+I created an update function in alien.py. This was for updating the movement of the aliens. After all this I included the
+self._update_aliens() function in the games main while loop. The update aliens function includes self.aliens.update()
+as well as self._check_fleet_edges() which I haven't explained yet. The check fleet edges basically checks to see if the 
+location of the edges of the fleet is at either side of the main screen, and if so multiplies the fleet direction (which
+I set to 1 in the settings) by -1. The reason why the fleet direction is multiplied by -1 is because when the fleet direction
+is negative the fleet goes left, when it's positive the fleet goes right. 
+I also made a method called change fleet direction that drops the fleet 10 units (I set the drop speed in settings) that uses a
+for loop to check every alien in the aliens sprites group and adds the fleet_drop_speed to the sprites groups y value
+(since the whole deal is inverted) and multiplies the fleet direction by -1, changing it.
+Tomorrow I'm going to code the some alien shooting, but for now I'm just going to upload my code.
